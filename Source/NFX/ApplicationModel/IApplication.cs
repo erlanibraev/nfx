@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NFX.ApplicationModel.Pile;
 using NFX.Time;
 
 namespace NFX.ApplicationModel
@@ -130,8 +130,13 @@ namespace NFX.ApplicationModel
      /// </summary>
      Time.IEventTimer EventTimer { get; }
 
+    /// <summary>
+    /// Reference on Pile
+    /// </summary>
+    IPile Pile { get; }
 
-     /// <summary>
+
+    /// <summary>
      /// Factory method that creates new session object suitable for partcular application type
      /// </summary>
      /// <param name="sessionID">Session identifier</param>

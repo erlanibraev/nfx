@@ -627,6 +627,8 @@
     <Compile Include="Time\TimeLocation.cs" />
     <Compile Include="Time\WinApi.cs" />
     <Compile Include="IntMath.cs" />
+    <Compile Include="Utils\LinkedList.cs" />
+    <Compile Include="Utils\LinkedListNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeAnalysis\Laconfig\LaconfigParser.Impl.cs" />

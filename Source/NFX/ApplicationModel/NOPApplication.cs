@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NFX.ApplicationModel.Pile;
 using NFX.Log;
 using NFX.Instrumentation;
 using NFX.Environment;
@@ -67,8 +67,7 @@ namespace NFX.ApplicationModel
     private Guid m_InstanceID = Guid.NewGuid();
     private DateTime m_StartTime;
     protected MemoryConfiguration m_Configuration;
-
-
+    protected static IPile m_Pile = new DefaultPile();
 
     #region IApplication Members
 
@@ -157,8 +156,10 @@ namespace NFX.ApplicationModel
             get { return NOPEventTimer.Instance; }
         }
 
+    public IPile Pile { get { return m_Pile; }}
 
-        public TimeLocation TimeLocation
+
+    public TimeLocation TimeLocation
         {
             get { return TimeLocation.Parent; }
         }

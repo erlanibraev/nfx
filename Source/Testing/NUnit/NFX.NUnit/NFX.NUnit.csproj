@@ -226,6 +226,7 @@
     <Compile Include="Templatization\TeztTemplate.cs" />
     <Compile Include="TestLog.cs" />
     <Compile Include="Throttling\ThrottlingTest.cs" />
+    <Compile Include="Utils\LinkedListTest001.cs" />
     <Compile Include="Wave\URIPatternTests.cs" />
     <Compile Include="Web\Client\RecordTest.cs" />
     <Compile Include="Web\EscapeJSLiteralTest.cs" />
@@ -327,7 +328,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

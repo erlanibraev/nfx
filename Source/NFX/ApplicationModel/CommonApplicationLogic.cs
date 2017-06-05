@@ -26,6 +26,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 
 using NFX.ApplicationModel;
+using NFX.ApplicationModel.Pile;
 using NFX.ApplicationModel.Volatile;
 
 using NFX.Log;
@@ -65,7 +66,7 @@ namespace NFX.ApplicationModel
       public const string CONFIG_OBJECT_STORE_SECTION = "object-store";
       public const string CONFIG_GLUE_SECTION = "glue";
       public const string CONFIG_SECURITY_SECTION = "security";
-
+      public const string CONFIG_PILE_SECTION = "pile";
 
       public const string CONFIG_PRELOAD_ASSEMBLIES_SECTION = "preload-assemblies";
       public const string CONFIG_ASSEMBLY_SECTION = "assembly";
@@ -127,6 +128,8 @@ namespace NFX.ApplicationModel
       protected ITimeSourceImplementation m_TimeSource;
 
       protected IEventTimerImplementation m_EventTimer;
+
+      protected static IPile m_Pile = new DefaultPile();
 
     #endregion
 
@@ -290,8 +293,17 @@ namespace NFX.ApplicationModel
           get { return m_EventTimer ?? NOPEventTimer.Instance; }
         }
 
+    /// <summary>
+    /// References Pile
+    /// </summary>
+    public IPile Pile
+    {
+      get { return m_Pile; } 
+      
+    }
 
-        /// <summary>
+
+    /// <summary>
         /// Returns time location of this LocalizedTimeProvider implementation
         /// </summary>
         public TimeLocation TimeLocation
@@ -1035,9 +1047,26 @@ namespace NFX.ApplicationModel
             WriteLog(MessageType.CatastrophicError, FROM, msg, error);
             throw new NFXException(msg, error);
           }
-
-
-
+        node = m_ConfigRoot[CONFIG_PILE_SECTION];
+        if (node.Exists)
+        {
+          m_Pile = FactoryUtils.MakeAndConfigure(node, typeof(NFX.ApplicationModel.Pile.DefaultPile)) as IPile;
+          if (m_Pile == null)
+          {
+            throw new NFXException(StringConsts.APP_INJECTION_TYPE_MISMATCH_ERROR +
+                                   node
+                                     .AttrByName(FactoryUtils.CONFIG_TYPE_ATTR)
+                                     .ValueAsString(CoreConsts.UNKNOWN));
+          }
+          else
+          {
+            ((DefaultPile) m_Pile).Start();
+          }
+        }
+        else
+        {
+          ((DefaultPile) m_Pile).Start();
+        }
 
         WriteLog(MessageType.Info, FROM, "Common application initialized in '{0}' time location".Args(this.TimeLocation));
         WriteLog(MessageType.Info, FROM, "Component dump:");

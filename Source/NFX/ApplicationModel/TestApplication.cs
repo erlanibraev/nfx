@@ -20,7 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using NFX.ApplicationModel.Pile;
 using NFX.Time;
 using NFX.ApplicationModel.Volatile;
 using NFX.DataAccess;
@@ -42,6 +42,7 @@ namespace NFX.ApplicationModel
         protected Guid m_InstanceID = Guid.NewGuid();
         protected List<IConfigSettings> m_ConfigSettings = new List<IConfigSettings>();
         protected ConfigSectionNode m_ConfigRoot;
+      private static IPile m_Pile = new DefaultPile();
 
         public TestApplication(ConfigSectionNode cfgRoot = null)
         {
@@ -107,8 +108,10 @@ namespace NFX.ApplicationModel
         public virtual Time.ITimeSource TimeSource { get; set; }
 
         public virtual Time.IEventTimer EventTimer { get; set; }
+      
+      public IPile Pile => m_Pile;
 
-        public virtual ISession MakeNewSessionInstance(Guid sessionID, Security.User user = null)
+      public virtual ISession MakeNewSessionInstance(Guid sessionID, Security.User user = null)
         {
             return NOPSession.Instance;
         }

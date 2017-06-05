@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 
 using NFX.ApplicationModel;
+using NFX.ApplicationModel.Pile;
 
 namespace NFX
 {
@@ -232,5 +233,10 @@ namespace NFX
        get {return NFX.ApplicationModel.ExecutionContext.Session.User; }
      }
 
+      /// <summary>
+      /// Returns Pile 
+      /// </summary>
+
+      public static IPile Pile => Instance.Pile;
     }
 }
